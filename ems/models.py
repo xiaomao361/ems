@@ -18,8 +18,10 @@ class User(models.Model):
     )
 
     name = models.CharField(max_length=128, unique=True, verbose_name='用户名')
+    full_name = models.CharField(max_length=128, default="", verbose_name='姓名')
     password = models.CharField(max_length=256, verbose_name='密码')
     email = models.EmailField(unique=True, verbose_name='邮件')
+    phone = models.CharField(max_length=128, default="", verbose_name='电话')
     sex = models.CharField(max_length=32, choices=gender, default="男", verbose_name='性别')
     department = models.CharField(max_length=32, choices=departments, default="", verbose_name='所属部门')
     c_time = models.DateTimeField(auto_now_add=True)
@@ -29,8 +31,8 @@ class User(models.Model):
 
     class Meta:
         ordering = ["-c_time"]
-        verbose_name = "用户"
-        verbose_name_plural = "用户"
+        verbose_name = "员工"
+        verbose_name_plural = "员工"
         
 class Category(models.Model):
      name = models.CharField(max_length=128, unique=True, verbose_name='类别')
@@ -92,6 +94,7 @@ class Merchant(models.Model):
     )
     name = models.CharField(max_length=128, unique=True, verbose_name='商户名称')
     phone = models.CharField(max_length=128, verbose_name='商户电话')
+    contact = models.CharField(max_length=128, default="", verbose_name='联系人')
     email = models.CharField(max_length=256, default="", blank=True, verbose_name='邮件地址')
     info = models.TextField(max_length=256, default="", blank=True, verbose_name='店铺信息')
     type = models.CharField(max_length=32, choices=gender, default="")

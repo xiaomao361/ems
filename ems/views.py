@@ -4,6 +4,10 @@ from ems import models
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.contrib.auth import authenticate, login
+from django.contrib import admin
+import logging
+
+logger = logging.getLogger('django')
 
 # login for admin user
 def log_in(request):
@@ -14,11 +18,13 @@ def log_in(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                logger.info('[Success] '+ username +' has logged in!')
                 return redirect('/index/')
             else:
                 message = "密码错误或未激活"
         else:
             message = "用户不存在！"
+        logger.warning('[Failed] '+ username + ' failed to login!')
         return render(request, 'login.html', {"message": message})
     else:
         return render(request, 'login.html')
@@ -36,7 +42,6 @@ def index(request):
 def equipment(request):
     equs = models.Equipment.objects.all()
     return render(request, 'equipment.html', {'page': 'Equipment', 'equs': equs})
-
 # login for normal user 
 # def login(request):
 #     if request.method == "POST":
