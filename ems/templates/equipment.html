@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 设备总览 {% endblock %}
+
+{% block css %}
+<!-- Ionicons -->
+<link rel="stylesheet" href="{% static 'adminlte/css/ionicons.min.css' %}">
+<!-- DataTables -->
+<link rel="stylesheet" href="{% static 'plugins/datatables/dataTables.bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">设备总览</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="equipment-list" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>设备编号</th>
+                                <th>设备名称</th>
+                                <th>设备类型</th>
+                                <th>SN码</th>
+                                <th>照片</th>
+                                <th>状态</th>
+                                <th>使用人</th>
+                                <th>采购方</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for equ in equs %}
+                            <tr>
+                                <td>{{ equ.id }}</td>
+                                <td>{{ equ.name }}</td>
+                                <td>{{ equ.category }}</td>
+                                <td>{{ equ.sn }}</td>
+                                <td>{{ equ.img }}</td>
+
+                                {% if equ.state == "useing" %}
+                                <td>
+                                    <i class="nav-icon fa fa-circle-o text-success">使用中</i>
+                                </td>
+                                {% elif equ.state == "problem" %}
+                                <td>
+                                    <i class="nav-icon fa fa-circle-o text-warning">问题</i>
+                                </td>
+                                {% elif equ.state == "unused" %}
+                                <td>
+                                    <i class="nav-icon fa fa-circle-o text-default">库存</i>
+                                </td>
+                                {% elif equ.state == "scrap" %}
+                                <td>
+                                    <i class="nav-icon fa fa-circle-o text-danger">报废</i>
+                                </td>
+                                {% elif equ.state == "fixing" %}
+                                <td>
+                                    <i class="nav-icon fa fa-circle-o text-info">维修中</i>
+                                </td>
+                                {% endif %}
+
+                                <td>{{ equ.user }}</td>
+                                <td>{{ equ.procurement }}</td>
+                                <td>{{ equ.remark }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>设备编号</th>
+                                <th>设备名称</th>
+                                <th>设备类型</th>
+                                <th>SN码</th>
+                                <th>照片</th>
+                                <th>状态</th>
+                                <th>使用人</th>
+                                <th>采购方</th>
+                                <th>备注</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{% endblock %}
+
+{% block script %}
+
+<!-- DataTables -->
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'plugins/fastclick/fastclick.js' %}"></script>
+<!-- page script -->
+<script>
+    $(function () {
+        $('#equipment-list').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false
+        });
+    });
+</script>
+{% endblock %}
