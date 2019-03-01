@@ -80,7 +80,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-slide="true" href="/logout/"><i class="fa fa-th-large"></i></a>
+                    <a class="nav-link" data-slide="true" href="/logout/"><i class="fa fa-sign-out"></i></a>
                 </li>
             </ul>
         </nav>
@@ -103,7 +103,7 @@
                         <img src="{% static 'adminlte/img/fhy.png' %}" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">冯海艳</a>
+                        <a href="/admin/auth/user/{{request.user.id}}/change/" class="d-block">{{ request.user.last_name }} {{ request.user.first_name }}</a>
                     </div>
                 </div>
 
@@ -203,7 +203,7 @@
                                 <i class="nav-icon fa fa-search"></i>
                                 <p>数据管理</p>
                             </a>
-                        </li>>
+                        </li>
                         <li class="nav-header">其他</li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
