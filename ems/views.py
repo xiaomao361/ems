@@ -42,6 +42,16 @@ def index(request):
 def equipment(request):
     equs = models.Equipment.objects.all()
     return render(request, 'equipment.html', {'page': 'Equipment', 'equs': equs})
+
+@login_required
+def detail(request):
+    if request.method == "GET":
+         sn = request.GET['sn']
+    # sn = request.POST['sn']
+    # eqs = models.Equipment.objects.get(sn=sn)
+    # return render(request, 'detail.html', {'page': 'detail', 'eqs': 'eqs'})
+    return render(request, 'detail.html', {'page': sn})
+
 # login for normal user 
 # def login(request):
 #     if request.method == "POST":
