@@ -19,27 +19,35 @@
                 <div class="card card-primary card-outline">
                     <div class="card-body box-profile">
                         <div class="text-center">
-                            <img class="profile-user-img img-fluid img-circle"
-                                src="{% static 'adminlte/img/user4-128x128.jpg' %}" alt="User profile picture">
+                            <img class="profile-user-img img-fluid" src="{% static equ.img %}" alt="equipment img">
                         </div>
 
-                        <h3 class="profile-username text-center">Nina Mcintire</h3>
+                        <h3 class="profile-username text-center">{{ equ.name }}</h3>
 
-                        <p class="text-muted text-center">Software Engineer</p>
+                        <p class="text-muted text-center">{{ equ.sn }}</p>
 
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
-                                <b>Followers</b> <a class="float-right">1,322</a>
+                                <b>品牌</b> <a class="float-right">{{ equ.brand }}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Following</b> <a class="float-right">543</a>
+                                <b>类别</b> <a class="float-right">{{ equ.category }}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Friends</b> <a class="float-right">13,287</a>
+                                <b>备注</b> <a class="float-right">{{ equ.remark }}</a>
                             </li>
                         </ul>
-
-                        <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                        {% if equ.state == "useing" %}
+                        <a href="#" class="btn btn-success btn-block"><b>使用中</b></a>
+                        {% elif equ.state == "problem" %}
+                        <a href="#" class="btn btn-warning btn-block"><b>问题</b></a>
+                        {% elif equ.state == "unused" %}
+                        <a href="#" class="btn btn-default btn-block"><b>库存</b></a>
+                        {% elif equ.state == "scrap" %}
+                        <a href="#" class="btn btn-danger btn-block"><b>报废</b></a>
+                        {% elif equ.state == "fixing" %}
+                        <a href="#" class="btn btn-info btn-block"><b>维修</b></a>
+                        {% endif %}
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -48,40 +56,28 @@
                 <!-- About Me Box -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">About Me</h3>
+                        <h3 class="card-title">{{ merchant.name }}</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <strong><i class="fa fa-book mr-1"></i> Education</strong>
+                        <strong><i class="fa fa-book mr-1"></i> 联系信息</strong>
 
                         <p class="text-muted">
-                            B.S. in Computer Science from the University of Tennessee at Knoxville
+                            <ul>
+                                <li>
+                                    {{ merchant.contact }}
+                                </li>
+                                <li>
+                                    {{ merchant.phone }}
+                                </li>
+                                <li>
+                                    {{ merchant.email }}
+                                </li>
+                            </ul>
                         </p>
-
                         <hr>
-
-                        <strong><i class="fa fa-map-marker mr-1"></i> Location</strong>
-
-                        <p class="text-muted">Malibu, California</p>
-
-                        <hr>
-
-                        <strong><i class="fa fa-pencil mr-1"></i> Skills</strong>
-
-                        <p class="text-muted">
-                            <span class="tag tag-danger">UI Design</span>
-                            <span class="tag tag-success">Coding</span>
-                            <span class="tag tag-info">Javascript</span>
-                            <span class="tag tag-warning">PHP</span>
-                            <span class="tag tag-primary">Node.js</span>
-                        </p>
-
-                        <hr>
-
-                        <strong><i class="fa fa-file-text-o mr-1"></i> Notes</strong>
-
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum
-                            enim neque.</p>
+                        <strong><i class="fa fa-map-marker mr-1"></i> 店面位置</strong>
+                        <p class="text-muted">{{ merchant.info }}</p>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -92,8 +88,7 @@
                 <div class="card">
                     <div class="card-header p-2">
                         <ul class="nav nav-pills">
-                            <li class="nav-item"><a class="nav-link active" href="#timeline"
-                                    data-toggle="tab">Timeline</a>
+                            <li class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">时间线</a>
                             </li>
                         </ul>
                     </div><!-- /.card-header -->

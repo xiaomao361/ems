@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^index/', views.index), 
     url(r'^equipment/', views.equipment),  
     url(r'^detail/', views.detail),  
+    url(r'^result/', views.result),  
     url(r'^$', views.index),
 ]

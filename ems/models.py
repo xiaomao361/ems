@@ -76,6 +76,9 @@ class Equipment(models.Model):
     user = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name='使用人')
     remark = models.TextField(max_length=256, default="", blank=True, verbose_name='备注')
     procurement = models.ForeignKey('Merchant', on_delete=models.CASCADE, default="", null=True, verbose_name='采购方')
+    price_in = models.CharField(max_length=128, verbose_name='买入价格')
+    price_out = models.CharField(max_length=128, blank=True, verbose_name='卖出价格')
+    maintain = models.ForeignKey('Merchant', on_delete=models.CASCADE, default="null", blank=True, related_name="fixer",null=True, verbose_name='维修方')
     c_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -107,3 +110,19 @@ class Merchant(models.Model):
         ordering = ["-c_time"]
         verbose_name = "商户"
         verbose_name_plural = "商户"
+
+class Notice(models.Model):
+    title = models.CharField(max_length=128, unique=True, verbose_name='标题')
+    content = models.TextField(max_length=256, default="", blank=True, verbose_name='内容')
+    is_read = models.BooleanField(default=False, verbose_name='是否已读')
+    c_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ["-c_time"]
+        verbose_name = "消息"
+        verbose_name_plural = "消息"
+
+

@@ -4,6 +4,7 @@ from django.contrib.admin.models import LogEntry
 
 admin.site.register(models.Category)
 admin.site.register(models.Brand)
+admin.site.register(models.Notice)
 
 admin.site.site_title="EMS manager"
 admin.site.site_header="EMS manager"
@@ -13,7 +14,7 @@ admin.site.index_title="EMS manager"
 class EquipmentAdmin(admin.ModelAdmin):
     fieldsets = [
         ('设备', {'fields': ['name', 'category', 'sn', 'brand', 'state', 'user', ]}),
-        ('其他', {'fields': ['img', 'remark', 'procurement']}),
+        ('其他', {'fields': ['img', 'remark', 'procurement', 'price_in', 'maintain', 'price_out']}),
     ]
     list_display = ('name', 'state', 'user')
     list_filter = ['c_time']

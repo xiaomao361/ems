@@ -35,8 +35,8 @@ def logout(request):
 
 @login_required
 def index(request):
-    pass
-    return render(request, 'index.html', {'page': 'Dashboard'})
+    notices = models.Notice.objects.all()
+    return render(request, 'index.html', {'page': 'Dashboard', 'notices': notices})
 
 @login_required
 def equipment(request):
@@ -44,13 +44,20 @@ def equipment(request):
     return render(request, 'equipment.html', {'page': 'Equipment', 'equs': equs})
 
 @login_required
+def result(request):
+    if request.method == "GET":
+        condition = request.GET['condition']
+        equs = models.Equipment.objects.filter(state=condition)
+        return render(request, 'result.html', {'page': 'result', 'equs': equs})
+
+@login_required
 def detail(request):
     if request.method == "GET":
-         sn = request.GET['sn']
-    # sn = request.POST['sn']
-    # eqs = models.Equipment.objects.get(sn=sn)
-    # return render(request, 'detail.html', {'page': 'detail', 'eqs': 'eqs'})
-    return render(request, 'detail.html', {'page': sn})
+        sn = request.GET['sn']
+        equ = models.Equipment.objects.get(sn=sn)
+        merchant = models.Merchant.objects.get(name=equ.procurement)
+        return render(request, 'detail.html', {'page': 'detail', 'equ': equ, 'merchant': merchant})
+        
 
 # login for normal user 
 # def login(request):

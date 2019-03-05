@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% block title %} 设备总览 {% endblock %}
+{% block title %} 检索结果 {% endblock %}
 
 {% block css %}
 <!-- Ionicons -->
@@ -16,15 +16,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">设备总览</h3>
+                    <h3 class="card-title">检索结果</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                     <table id="equipment-list" class="table table-bordered table-striped">
                         <thead>
-                            {% if message %}
-                            <div class=" alert alert-warning">{{ message }}</div>
-                            {% endif %}
                             <tr>
                                 <th>设备编号</th>
                                 <th>设备名称</th>
