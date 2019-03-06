@@ -22,12 +22,12 @@ class EquipmentAdmin(admin.ModelAdmin):
     date_hierarchy = 'c_time'
 
 @admin.register(models.User)
-class EquipmentAdmin(admin.ModelAdmin):
+class UserAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'phone', 'email', 'department')
     search_fields = ['full_name', 'phone', 'email']
 
 @admin.register(models.Merchant)
-class EquipmentAdmin(admin.ModelAdmin):
+class MerchantAdmin(admin.ModelAdmin):
     list_display = ('name', 'contact', 'phone', 'email', 'info')
     list_filter = ['type']
 

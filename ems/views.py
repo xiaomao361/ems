@@ -56,6 +56,8 @@ def detail(request):
         sn = request.GET['sn']
         equ = models.Equipment.objects.get(sn=sn)
         merchant = models.Merchant.objects.get(name=equ.procurement)
+        for log in LogEntry.objects.filter(object_id=equ.id):
+            print(log)
         return render(request, 'detail.html', {'page': 'detail', 'equ': equ, 'merchant': merchant})
         
 
