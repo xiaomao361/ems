@@ -65,6 +65,10 @@
                                 <td>
                                     <i class="nav-icon fa fa-circle-o text-info">维修中</i>
                                 </td>
+                                {% elif equ.state == "sell" %}
+                                <td>
+                                    <i class="nav-icon fa fa-circle-o text-info">卖出</i>
+                                </td>
                                 {% endif %}
 
                                 <td>{{ equ.user }}</td>

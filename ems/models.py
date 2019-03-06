@@ -73,6 +73,7 @@ class Equipment(models.Model):
         ('fixing', "维修中"),
         ('scrap', "报废"),
         ('problem', "问题"),
+        ('sell', "卖出"),
     )
 
     name = models.CharField(max_length=128, unique=True, verbose_name='设备名称')

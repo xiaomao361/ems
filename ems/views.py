@@ -6,10 +6,13 @@ from django.contrib import auth
 from django.contrib.auth import authenticate, login
 from django.contrib import admin
 import logging
+from django.contrib.admin.models import LogEntry
 
 logger = logging.getLogger('django')
 
 # login for admin user
+
+
 def log_in(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -18,30 +21,34 @@ def log_in(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                logger.info('[Success] '+ username +' has logged in!')
+                logger.info('[Success] ' + username + ' has logged in!')
                 return redirect('/index/')
             else:
                 message = "密码错误或未激活"
         else:
             message = "用户不存在！"
-        logger.warning('[Failed] '+ username + ' failed to login!')
+        logger.warning('[Failed] ' + username + ' failed to login!')
         return render(request, 'login.html', {"message": message})
     else:
         return render(request, 'login.html')
 
+
 def logout(request):
     auth.logout(request)
     return render(request, 'login.html')
+
 
 @login_required
 def index(request):
     notices = models.Notice.objects.all()
     return render(request, 'index.html', {'page': 'Dashboard', 'notices': notices})
 
+
 @login_required
 def equipment(request):
     equs = models.Equipment.objects.all()
     return render(request, 'equipment.html', {'page': 'Equipment', 'equs': equs})
+
 
 @login_required
 def result(request):
@@ -50,18 +57,22 @@ def result(request):
         equs = models.Equipment.objects.filter(state=condition)
         return render(request, 'result.html', {'page': 'result', 'equs': equs})
 
+
 @login_required
 def detail(request):
     if request.method == "GET":
         sn = request.GET['sn']
         equ = models.Equipment.objects.get(sn=sn)
         merchant = models.Merchant.objects.get(name=equ.procurement)
-        for log in LogEntry.objects.filter(object_id=equ.id):
-            print(log)
-        return render(request, 'detail.html', {'page': 'detail', 'equ': equ, 'merchant': merchant})
-        
+        equ_historys = models.Equipment.history.filter(sn=sn)
+        return render(request, 'detail.html',
+                      {'page': 'detail',
+                       'equ': equ,
+                       'merchant': merchant,
+                       'equ_historys': equ_historys})
 
-# login for normal user 
+
+# login for normal user
 # def login(request):
 #     if request.method == "POST":
 #         username = request.POST.get('username', None)

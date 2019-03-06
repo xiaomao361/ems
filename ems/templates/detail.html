@@ -47,6 +47,8 @@
                         <a href="#" class="btn btn-danger btn-block"><b>报废</b></a>
                         {% elif equ.state == "fixing" %}
                         <a href="#" class="btn btn-info btn-block"><b>维修</b></a>
+                        {% elif equ.state == "sell" %}
+                        <a href="#" class="btn btn-info btn-block"><b>卖出</b></a>
                         {% endif %}
                     </div>
                     <!-- /.card-body -->
@@ -115,10 +117,7 @@
                                         </h3>
 
                                         <div class="timeline-body">
-                                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                                            weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                                            jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                                            quora plaxo ideeli hulu weebly balihoo...
+                                            {{ equ_historys }}
                                         </div>
                                         <div class="timeline-footer">
                                             <a href="#" class="btn btn-primary btn-sm">Read more</a>
