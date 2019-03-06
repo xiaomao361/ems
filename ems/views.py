@@ -7,12 +7,14 @@ from django.contrib.auth import authenticate, login
 from django.contrib import admin
 import logging
 from django.contrib.admin.models import LogEntry
+from django.contrib.auth.models import User, Group
+from rest_framework import viewsets
+from ems.serializer import EquipmentSerializer, UserSerializer, GroupSerializer
 
 logger = logging.getLogger('django')
 
+
 # login for admin user
-
-
 def log_in(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -33,15 +35,19 @@ def log_in(request):
         return render(request, 'login.html')
 
 
+# 登出
 def logout(request):
     auth.logout(request)
     return render(request, 'login.html')
 
 
+# 首页
 @login_required
 def index(request):
     notices = models.Notice.objects.all()
     return render(request, 'index.html', {'page': 'Dashboard', 'notices': notices})
+
+# 设备总览
 
 
 @login_required
@@ -50,12 +56,15 @@ def equipment(request):
     return render(request, 'equipment.html', {'page': 'Equipment', 'equs': equs})
 
 
+# 结果展示页面
 @login_required
 def result(request):
     if request.method == "GET":
         condition = request.GET['condition']
         equs = models.Equipment.objects.filter(state=condition)
         return render(request, 'result.html', {'page': 'result', 'equs': equs})
+
+# 设备详情页面
 
 
 @login_required
@@ -71,6 +80,40 @@ def detail(request):
                        'merchant': merchant,
                        'equ_historys': equ_historys})
 
+
+class EquipmentViewSet(viewsets.ModelViewSet):
+    """
+    retrieve:
+        Return a equipment instance.
+
+    list:
+        Return all equipment, ordered by most recently joined.
+
+    create:
+        Create a new equipment.
+
+    delete:
+        Remove an existing usequipmenter.
+
+    partial_update:
+        Update one or more fields on an existing equipment.
+
+    update:
+        Update a equipment.
+    """
+
+    queryset = models.Equipment.objects.all()
+    serializer_class = EquipmentSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
 
 # login for normal user
 # def login(request):
