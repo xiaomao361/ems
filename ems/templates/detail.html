@@ -117,7 +117,25 @@
                                         </h3>
 
                                         <div class="timeline-body">
-                                            {{ equ_historys }}
+                                            {% for history in equ_historys %}
+
+                                            {{ history.history_date }}
+
+                                            {% if history.history_user_id == 2 %}
+                                            冯海艳
+                                            {% elif history.history_user_id == 1 %}
+                                            周维
+                                            {% endif %}
+
+                                            {% if history.history_type == '+' %}
+                                            新增
+                                            {% elif history.history_type == '~' %}
+                                            修改
+                                            {% elif history.history_type == '-' %}
+                                            删除
+                                            {% endif %}
+                                            <br>
+                                            {% endfor %}
                                         </div>
                                         <div class="timeline-footer">
                                             <a href="#" class="btn btn-primary btn-sm">Read more</a>

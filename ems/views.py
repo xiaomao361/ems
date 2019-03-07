@@ -48,15 +48,14 @@ def index(request):
     return render(request, 'index.html', {'page': 'Dashboard', 'notices': notices})
 
 # 设备总览
-
-
 @login_required
 def equipment(request):
     equs = models.Equipment.objects.all()
     return render(request, 'equipment.html', {'page': 'Equipment', 'equs': equs})
 
-
 # 结果展示页面
+
+
 @login_required
 def result(request):
     if request.method == "GET":
@@ -73,12 +72,17 @@ def detail(request):
         sn = request.GET['sn']
         equ = models.Equipment.objects.get(sn=sn)
         merchant = models.Merchant.objects.get(name=equ.procurement)
-        equ_historys = models.Equipment.history.filter(sn=sn)
+        equ = models.Equipment.objects.get(sn=sn)
+        equ_historys = equ.history.all()
+        new_record, old_record, *_ = equ.history.all()
+        delta = new_record.diff_against(old_record)
+        for change in delta.changes:
+            print("{} changed from {} to {}".format(change.field, change.old, change.new))
         return render(request, 'detail.html',
-                      {'page': 'detail',
-                       'equ': equ,
-                       'merchant': merchant,
-                       'equ_historys': equ_historys})
+                        {'page': 'detail',
+                        'equ': equ,
+                        'merchant': merchant,
+                        'equ_historys': equ_historys})
 
 
 class EquipmentViewSet(viewsets.ModelViewSet):
