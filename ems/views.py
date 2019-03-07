@@ -74,10 +74,11 @@ def detail(request):
         merchant = models.Merchant.objects.get(name=equ.procurement)
         equ = models.Equipment.objects.get(sn=sn)
         equ_historys = equ.history.all()
-        new_record, old_record, *_ = equ.history.all()
-        delta = new_record.diff_against(old_record)
-        for change in delta.changes:
-            print("{} changed from {} to {}".format(change.field, change.old, change.new))
+        if len(equ_historys) > 1 :
+            new_record, old_record, *_ = equ.history.all()
+            delta = new_record.diff_against(old_record)
+            for change in delta.changes:
+                print("{} changed from {} to {}".format(change.field, change.old, change.new))
         return render(request, 'detail.html',
                         {'page': 'detail',
                         'equ': equ,

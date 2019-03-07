@@ -1,6 +1,7 @@
 from django.contrib import admin
 from . import models
 from django.contrib.admin.models import LogEntry
+from simple_history.admin import SimpleHistoryAdmin
 
 admin.site.register(models.Category)
 admin.site.register(models.Brand)
@@ -10,7 +11,7 @@ admin.site.site_title="EMS manager"
 admin.site.site_header="EMS manager"
 admin.site.index_title="EMS manager"
 
-@admin.register(models.Equipment)
+# @admin.register(models.Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
     fieldsets = [
         ('设备', {'fields': ['name', 'category', 'sn', 'brand', 'state', 'user', ]}),
@@ -20,6 +21,12 @@ class EquipmentAdmin(admin.ModelAdmin):
     list_filter = ['c_time']
     search_fields = ['sn', 'name', 'state']
     date_hierarchy = 'c_time'
+
+class EquipmentHistoryAdmin(SimpleHistoryAdmin):
+    list_display = ['name', 'sn', 'state', 'remark']
+
+admin.site.register(models.Equipment, EquipmentHistoryAdmin)
+
 
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
