@@ -48,6 +48,8 @@ def index(request):
     return render(request, 'index.html', {'page': 'Dashboard', 'notices': notices})
 
 # 设备总览
+
+
 @login_required
 def equipment(request):
     equs = models.Equipment.objects.all()
@@ -69,21 +71,31 @@ def result(request):
 @login_required
 def detail(request):
     if request.method == "GET":
+        timelines = {}
+        i = 0
         sn = request.GET['sn']
         equ = models.Equipment.objects.get(sn=sn)
         merchant = models.Merchant.objects.get(name=equ.procurement)
         equ = models.Equipment.objects.get(sn=sn)
         equ_historys = equ.history.all()
-        if len(equ_historys) > 1 :
-            new_record, old_record, *_ = equ.history.all()
-            delta = new_record.diff_against(old_record)
-            for change in delta.changes:
-                print("{} changed from {} to {}".format(change.field, change.old, change.new))
+        for equ_history in equ_historys:
+            date = equ_history.history_date
+            user = equ_history.history_user_id
+            type = equ_history.history_type
+            if i > 0:
+                new_record, old_record = equ_historys[i], equ_historys[i-1]
+                delta = new_record.diff_against(old_record)
+                timelines[i] = {'date': date, 'user': user,
+                                'type': type, 'changes': delta.changes}
+            else:
+                timelines[i] = {'date': date, 'user': user,
+                                'type': type, 'changes': ''}
+            i += 1
         return render(request, 'detail.html',
-                        {'page': 'detail',
-                        'equ': equ,
-                        'merchant': merchant,
-                        'equ_historys': equ_historys})
+                      {'page': 'detail',
+                       'equ': equ,
+                       'merchant': merchant,
+                       'timelines': timelines})
 
 
 class EquipmentViewSet(viewsets.ModelViewSet):
