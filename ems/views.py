@@ -76,7 +76,6 @@ def detail(request):
         sn = request.GET['sn']
         equ = models.Equipment.objects.get(sn=sn)
         merchant = models.Merchant.objects.get(name=equ.procurement)
-        equ = models.Equipment.objects.get(sn=sn)
         equ_historys = equ.history.all()
         for equ_history in equ_historys:
             date = equ_history.history_date
