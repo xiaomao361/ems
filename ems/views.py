@@ -10,6 +10,7 @@ from django.contrib.admin.models import LogEntry
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from ems.serializer import EquipmentSerializer, UserSerializer, GroupSerializer
+from datetime import datetime
 
 logger = logging.getLogger('django')
 
@@ -71,7 +72,7 @@ def result(request):
 @login_required
 def detail(request):
     if request.method == "GET":
-        timelines = {}
+        dict = {}
         i = 0
         sn = request.GET['sn']
         equ = models.Equipment.objects.get(sn=sn)
@@ -83,13 +84,19 @@ def detail(request):
             type = equ_history.history_type
             if i > 0:
                 new_record, old_record = equ_historys[i], equ_historys[i-1]
-                delta = new_record.diff_against(old_record)
-                timelines[i] = {'date': date, 'user': user,
+                delta = new_record.diff_against(old_record)               
+                dict[i] = {'date': date, 'user': user,
                                 'type': type, 'changes': delta.changes}
             else:
-                timelines[i] = {'date': date, 'user': user,
-                                'type': type, 'changes': ''}
+                dict[i] = {'date': date, 'user': user,
+                                'type': type, 'changes': ''}    
             i += 1
+        timelines = {}
+        for value in dict.items():
+            date = value[1].get('date').strftime('%Y-%m-%d')
+            if timelines.get(date) == None :
+                timelines[date] = []
+            timelines.get(date).append(value)
         return render(request, 'detail.html',
                       {'page': 'detail',
                        'equ': equ,

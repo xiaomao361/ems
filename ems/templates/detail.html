@@ -117,18 +117,25 @@
                                         </h3>
 
                                         <div class="timeline-body">
-                                            {% for keys, values in timelines.items %}
-                                                {% for key, value in values.items%}
-                                                    {% if key == 'changes' %}
-                                                        {% if value %}
-                                                            {% for v in value %}
-                                                                {{v.field}} from {{ v.old }} to {{v.new}}
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    {% else %}
-                                                        {{key}}:{{value}}
-                                                    {% endif %}
-                                                    <br>
+                                            {% for date, messages in timelines.items %}
+                                                {{ date }}
+                                                <br>
+                                                {% for message in messages %}
+                                                    {% for data in message %}
+                                                        {% for key, value in data.items %}
+                                                            {% if key == 'changes' %}
+                                                                {% if value %}
+                                                                    {% for v in value %}
+                                                                        {{v.field}} from {{ v.old }} to {{v.new}}
+                                                                        <br>
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                            {% else %}
+                                                                {{key}}:{{value}}
+                                                            {% endif %}
+                                                            <br>
+                                                        {% endfor %}
+                                                    {% endfor %}
                                                 {% endfor %}
                                             {% endfor %}
                                         </div>
