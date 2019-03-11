@@ -78,23 +78,27 @@ def detail(request):
         equ = models.Equipment.objects.get(sn=sn)
         merchant = models.Merchant.objects.get(name=equ.procurement)
         equ_historys = equ.history.all()
+
         for equ_history in equ_historys:
             date = equ_history.history_date
             user = equ_history.history_user_id
             type = equ_history.history_type
-            if i > 0:
-                new_record, old_record = equ_historys[i], equ_historys[i-1]
-                delta = new_record.diff_against(old_record)               
+            if i == len(equ_historys)-1:             
                 dict[i] = {'date': date, 'user': user,
-                                'type': type, 'changes': delta.changes}
+                           'type': type, 'changes': ''}
             else:
+
+                new_record, old_record = equ_historys[i], equ_historys[i+1]
+                delta = new_record.diff_against(old_record)
                 dict[i] = {'date': date, 'user': user,
-                                'type': type, 'changes': ''}    
+                           'type': type, 'changes': delta.changes}
             i += 1
+
+
         timelines = {}
         for value in dict.items():
             date = value[1].get('date').strftime('%Y-%m-%d')
-            if timelines.get(date) == None :
+            if timelines.get(date) == None:
                 timelines[date] = []
             timelines.get(date).append(value)
         return render(request, 'detail.html',

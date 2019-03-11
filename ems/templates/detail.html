@@ -94,126 +94,107 @@
                             </li>
                         </ul>
                     </div><!-- /.card-header -->
+
                     <div class="card-body">
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="timeline">
                             <!-- The timeline -->
+
                             <ul class="timeline timeline-inverse">
                                 <!-- timeline time label -->
-                                <li class="time-label">
-                                    <span class="bg-danger">
-                                        10 Feb. 2014
-                                    </span>
-                                </li>
-                                <!-- /.timeline-label -->
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-envelope bg-primary"></i>
-
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-
-                                        <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email
-                                        </h3>
-
-                                        <div class="timeline-body">
-                                            {% for date, messages in timelines.items %}
-                                                {{ date }}
-                                                <br>
-                                                {% for message in messages %}
-                                                    {% for data in message %}
-                                                        {% for key, value in data.items %}
-                                                            {% if key == 'changes' %}
-                                                                {% if value %}
-                                                                    {% for v in value %}
-                                                                        {{v.field}} from {{ v.old }} to {{v.new}}
-                                                                        <br>
-                                                                    {% endfor %}
-                                                                {% endif %}
-                                                            {% else %}
-                                                                {{key}}:{{value}}
-                                                            {% endif %}
-                                                            <br>
-                                                        {% endfor %}
-                                                    {% endfor %}
-                                                {% endfor %}
-                                            {% endfor %}
-                                        </div>
-                                        <div class="timeline-footer">
-                                            <a href="#" class="btn btn-primary btn-sm">Read more</a>
-                                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!-- END timeline item -->
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-user bg-info"></i>
-
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-
-                                        <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted
-                                            your friend request
-                                        </h3>
-                                    </div>
-                                </li>
-                                <!-- END timeline item -->
-                                <!-- timeline item -->
-                                <li>
-                                    <i class="fa fa-comments bg-warning"></i>
-
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-
-                                        <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post
-                                        </h3>
-
-                                        <div class="timeline-body">
-                                            Take me to your leader!
-                                            Switzerland is small and neutral!
-                                            We are more like Germany, ambitious and misunderstood!
-                                        </div>
-                                        <div class="timeline-footer">
-                                            <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <!-- END timeline item -->
-                                <!-- timeline time label -->
+                                {% for date, messages in timelines.items %}
                                 <li class="time-label">
                                     <span class="bg-success">
-                                        3 Jan. 2014
+                                        {{ date }}
                                     </span>
                                 </li>
-                                <!-- /.timeline-label -->
-                                <!-- timeline item -->
+                                {% for message in messages %}
+                                {% for data in message %}
+                                {% if data.changes %}
                                 <li>
-                                    <i class="fa fa-camera bg-purple"></i>
+                                    {% if data.type == '+' %}
+                                    <i class="fa fa-map-marker bg-primary"></i>
+                                    {% elif  data.type == '~' %}
+                                    <i class="fa fa-clock-o bg-warning"></i>
+                                    {% elif  data.type == '-' %}
+                                    <i class="fa fa-comments bg-danger"></i>
+                                    {% endif %}
 
                                     <div class="timeline-item">
-                                        <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
+                                        <span class="time"><i class="fa fa-clock-o"></i> {{ data.date|date:"H:i:s" }}
+                                        </span>
 
-                                        <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos
+                                        <h3 class="timeline-header">
+                                            <a href="#">
+                                                {% if data.user == 1 %}
+                                                周维
+                                                {% elif  data.user == 2 %}
+                                                冯海艳
+                                                {% endif %}
+                                            </a>
+                                            {% if data.type == '+' %}
+                                            新增了
+                                            {% elif data.type == '~' %}
+                                            修改了
+                                            {% elif data.type == '-' %}
+                                            删除了
+                                            {% endif %}
                                         </h3>
 
                                         <div class="timeline-body">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                            {% for v in data.changes %}
+                                                {% if v.field == 'img' %}
+                                                    将图片地址从{{ v.old }}修改为{{v.new}}
+                                                {% elif v.field == 'state' %}
+                                                    将状态从
+                                                    {% if v.old == 'unused' %}
+                                                    库存
+                                                    {% elif v.old == 'useing' %}
+                                                    使用中
+                                                    {% elif v.old == 'fixing' %}
+                                                    维修中
+                                                    {% elif v.old == 'scrap' %}
+                                                    报废
+                                                    {% elif v.old == 'problem' %}
+                                                    问题
+                                                    {% elif v.old == 'sell' %}
+                                                    卖出
+                                                    {% endif %}
+                                                    修改为
+                                                    {% if v.new == 'unused' %}
+                                                    库存
+                                                    {% elif v.new == 'useing' %}
+                                                    使用中
+                                                    {% elif v.new == 'fixing' %}
+                                                    维修中
+                                                    {% elif v.new == 'scrap' %}
+                                                    报废
+                                                    {% elif v.new == 'problem' %}
+                                                    问题
+                                                    {% elif v.new == 'sell' %}
+                                                    卖出
+                                                    {% endif %}
+                                                {% elif v.field == 'remark' %}
+                                                    将备注从{{ v.old }}修改为{{v.new}}
+                                                {% elif v.field == 'maintain' %}
+                                                    将维修商从{{ v.old }}修改为{{v.new}}
+                                                {% elif v.field == 'user' %}
+                                                    将使用人从{{ v.old }}修改为{{v.new}}
+                                                {% endif %}
+                                                <br>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </li>
-                                <!-- END timeline item -->
+                                {% endif %}
+                                {% endfor %}
+                                {% endfor %}
+                                {% endfor %}
                                 <li>
                                     <i class="fa fa-clock-o bg-gray"></i>
                                 </li>
                             </ul>
                         </div>
-                        <!-- /.tab-pane -->
-
-
                         <!-- /.tab-pane -->
                     </div>
                     <!-- /.tab-content -->
