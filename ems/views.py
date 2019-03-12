@@ -111,11 +111,16 @@ def apps(request):
 @login_required
 def add_app(request):
     app_id = crypt.mksalt(crypt.METHOD_SHA512)
-    print(app_id)
     app_key = hashlib.sha224(app_id.encode("utf-8")).hexdigest()
-    print(app_key)
     models.OpenApp.objects.create(app_id=app_id, app_key=app_key)
     return redirect('/apps/')
+
+@login_required
+def del_app(request):
+    app_id = request.GET['app_id']
+    models.OpenApp.objects.get(app_id=app_id).delete()
+    return redirect('/apps/')
+    
 
 @csrf_exempt
 def get_equipment(request):

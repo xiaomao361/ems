@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^equipment/', views.equipment),
     url(r'^apps/', views.apps),
     url(r'^add_app/', views.add_app),
+    url(r'^del_app/', views.del_app),
     url(r'^detail/', views.detail),
     url(r'^result/', views.result),
     url(r'^$', views.index),

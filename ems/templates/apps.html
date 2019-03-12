@@ -11,44 +11,51 @@
 
 {% block content %}
 <section>
-<div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">应用接口列表</h3>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">应用接口列表</h3>
 
-              <div class="card-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
+          <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
 
-                  <div class="input-group-append">
-                    <button type="submit" class="btn btn-default"><a href="/add_app/" class="fa fa-plus-circle"></a></button>
-                  </div>
-                </div>
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-default"><a href="/add_app/"
+                    class="fa fa-plus-circle"></a></button>
               </div>
             </div>
-            <!-- /.card-header -->
-            <div class="card-body table-responsive p-0">
-              <table class="table table-hover">
-                <tr>
-                  <th>ID</th>
-                  <th>APP_ID</th>
-                  <th>APP_key</th>
-                </tr>
-                {% for app in apps %}
-                <tr>
-                  <td>{{app.id}}</td>
-                  <td>{{app.app_id}}</td>
-                  <td>{{app.app_key}}</td>
-                </tr>
-                {% endfor %}
-              </table>
-            </div>
-            <!-- /.card-body -->
           </div>
-          <!-- /.card -->
         </div>
-      </div><!-- /.row -->
-</section>  
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+          <table class="table table-hover">
+            <tr>
+              <th>ID</th>
+              <th>APP_ID</th>
+              <th>APP_key</th>
+              <th>DETETE</th>
+            </tr>
+            {% for app in apps %}
+            <tr>
+              <td>{{app.id}}</td>
+              <td>{{app.app_id}}</td>
+              <td>{{app.app_key}}</td>
+              <td>
+                <a href="/del_app/?app_id={{ app.app_id }}">
+                  <button type="button" class="btn btn-block btn-outline-danger" onclick="return confirm('确定删除？')" >删除</button>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div><!-- /.row -->
+</section>
 {% endblock %}
 
 {% block script %}
