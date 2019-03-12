@@ -149,3 +149,17 @@ class Notice(models.Model):
         ordering = ["-c_time"]
         verbose_name = "消息"
         verbose_name_plural = "消息"
+
+
+class OpenApp(models.Model):
+    app_id = models.CharField(max_length=128, unique=True, verbose_name='app_id')
+    app_key = models.TextField(max_length=256, verbose_name='app_key')
+    c_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.app_id
+
+    class Meta:
+        ordering = ["-c_time"]
+        verbose_name = "app_id"
+        verbose_name_plural = "app_id"

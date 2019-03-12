@@ -1,11 +1,9 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
+import logging, crypt, hashlib
 from ems import models
 from django.contrib.auth.decorators import login_required
-from django.contrib import auth
+from django.contrib import auth, admin
 from django.contrib.auth import authenticate, login
-from django.contrib import admin
-import logging
 from django.contrib.admin.models import LogEntry
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
@@ -49,16 +47,12 @@ def index(request):
     return render(request, 'index.html', {'page': 'Dashboard', 'notices': notices})
 
 # 设备总览
-
-
 @login_required
 def equipment(request):
     equs = models.Equipment.objects.all()
     return render(request, 'equipment.html', {'page': 'Equipment', 'equs': equs})
 
 # 结果展示页面
-
-
 @login_required
 def result(request):
     if request.method == "GET":
@@ -66,9 +60,8 @@ def result(request):
         equs = models.Equipment.objects.filter(state=condition)
         return render(request, 'result.html', {'page': 'result', 'equs': equs})
 
+
 # 设备详情页面
-
-
 @login_required
 def detail(request):
     if request.method == "GET":
@@ -83,17 +76,15 @@ def detail(request):
             date = equ_history.history_date
             user = equ_history.history_user_id
             type = equ_history.history_type
-            if i == len(equ_historys)-1:             
+            if i == len(equ_historys)-1:
                 dict[i] = {'date': date, 'user': user,
                            'type': type, 'changes': ''}
             else:
-
                 new_record, old_record = equ_historys[i], equ_historys[i+1]
                 delta = new_record.diff_against(old_record)
                 dict[i] = {'date': date, 'user': user,
                            'type': type, 'changes': delta.changes}
             i += 1
-
 
         timelines = {}
         for value in dict.items():
@@ -106,6 +97,26 @@ def detail(request):
                        'equ': equ,
                        'merchant': merchant,
                        'timelines': timelines})
+
+# open api
+@login_required
+def apps(request):
+    apps = models.OpenApp.objects.all()
+    return render(request, 'apps.html', {'page': 'apps', 'apps': apps})
+
+@login_required
+def add_app(request):
+    app_id = crypt.mksalt(crypt.METHOD_SHA512)
+    print(app_id)
+    app_key = hashlib.sha224(app_id.encode("utf-8")).hexdigest()
+    print(app_key)
+    models.OpenApp.objects.create(app_id=app_id, app_key=app_key)
+    return redirect('/apps/')
+
+# def get_equipment(request):
+#     if request.method == "POST":
+#         app_id = request.POST['app_id']
+#         app_key = request.POST['app_key']
 
 
 class EquipmentViewSet(viewsets.ModelViewSet):

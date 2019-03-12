@@ -6,6 +6,7 @@ from simple_history.admin import SimpleHistoryAdmin
 admin.site.register(models.Category)
 admin.site.register(models.Brand)
 admin.site.register(models.Notice)
+admin.site.register(models.OpenApp)
 
 admin.site.site_title="EMS manager"
 admin.site.site_header="EMS manager"
