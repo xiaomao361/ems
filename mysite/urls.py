@@ -47,6 +47,7 @@ urlpatterns = [
     url(r'^result/', views.result),
     url(r'^$', views.index),
     url(r'^api/', include(router.urls)),
+    url(r'^get_equipment/', views.get_equipment),
     # drf登录
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

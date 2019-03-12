@@ -9,6 +9,10 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from ems.serializer import EquipmentSerializer, UserSerializer, GroupSerializer
 from datetime import datetime
+import json
+from django.core import serializers
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 logger = logging.getLogger('django')
 
@@ -113,11 +117,22 @@ def add_app(request):
     models.OpenApp.objects.create(app_id=app_id, app_key=app_key)
     return redirect('/apps/')
 
-# def get_equipment(request):
-#     if request.method == "POST":
-#         app_id = request.POST['app_id']
-#         app_key = request.POST['app_key']
-
+@csrf_exempt
+def get_equipment(request):
+    if request.method == "POST":
+        app_id = request.POST['app_id'].replace(' ', '')
+        app_key = request.POST['app_key']
+        print(app_id, app_key)
+        try:
+            check_key = models.OpenApp.objects.get(app_id=app_id).app_key
+        except models.OpenApp.DoesNotExist:
+            check_key = None
+        if app_key == check_key:
+            equs = models.Equipment.objects.all()
+            resp = {'code': 100, 'detail': serializers.serialize('json', equs)}
+        else:
+            resp = {'code': 403, 'detail': 'error app_id or app_key'}
+        return HttpResponse(json.dumps(resp), content_type="application/json")
 
 class EquipmentViewSet(viewsets.ModelViewSet):
     """
