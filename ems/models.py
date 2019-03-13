@@ -163,3 +163,16 @@ class OpenApp(models.Model):
         ordering = ["-c_time"]
         verbose_name = "app_id"
         verbose_name_plural = "app_id"
+
+class BakData(models.Model):
+    name = models.CharField(max_length=128, unique=True, verbose_name='name')
+    size = models.CharField(max_length=128, default="", verbose_name='size')
+    c_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["-c_time"]
+        verbose_name = "name"
+        verbose_name_plural = "name"

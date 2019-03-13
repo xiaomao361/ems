@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-import logging, crypt, hashlib
+import logging, json, crypt, hashlib, time, os
 from ems import models
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth, admin
@@ -9,7 +9,6 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from ems.serializer import EquipmentSerializer, UserSerializer, GroupSerializer
 from datetime import datetime
-import json
 from django.core import serializers
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -108,6 +107,7 @@ def apps(request):
     apps = models.OpenApp.objects.all()
     return render(request, 'apps.html', {'page': 'apps', 'apps': apps})
 
+
 @login_required
 def add_app(request):
     app_id = crypt.mksalt(crypt.METHOD_SHA512)
@@ -115,19 +115,18 @@ def add_app(request):
     models.OpenApp.objects.create(app_id=app_id, app_key=app_key)
     return redirect('/apps/')
 
+
 @login_required
 def del_app(request):
     app_id = request.GET['app_id']
     models.OpenApp.objects.get(app_id=app_id).delete()
     return redirect('/apps/')
-    
 
 @csrf_exempt
 def get_equipment(request):
     if request.method == "POST":
         app_id = request.POST['app_id'].replace(' ', '')
-        app_key = request.POST['app_key']
-        print(app_id, app_key)
+        app_key = request.POST['app_key'].replace(' ', '')
         try:
             check_key = models.OpenApp.objects.get(app_id=app_id).app_key
         except models.OpenApp.DoesNotExist:
@@ -138,6 +137,7 @@ def get_equipment(request):
         else:
             resp = {'code': 403, 'detail': 'error app_id or app_key'}
         return HttpResponse(json.dumps(resp), content_type="application/json")
+
 
 class EquipmentViewSet(viewsets.ModelViewSet):
     """
@@ -173,7 +173,36 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
-# login for normal user
+# data
+@login_required
+def datas(request):
+    datas = models.BakData.objects.all()
+    return render(request, 'datas.html', {'page': 'datas', 'datas': datas})
+
+
+@login_required
+def add_data(request):
+    now = time.strftime('%Y%m%d%H%M%S')
+    os.system('python manage.py dumpdata --format=json > ./backup/' + now)
+    size = os.path.getsize('./backup/' + now)
+    models.BakData.objects.create(name=now, size=round(size/1024))
+    return redirect('/datas/')
+
+
+@login_required
+def del_data(request):
+    name = request.GET['name']
+    models.BakData.objects.get(name=name).delete()
+    os.system('rm -rf ./backup/' + name)
+    return redirect('/datas/')
+
+@login_required
+def load_data(request):
+    name = request.GET['name']
+    os.system('python manage.py loaddata' + name)
+    return redirect('/datas/')
+
+# login for normal userg
 # def login(request):
 #     if request.method == "POST":
 #         username = request.POST.get('username', None)

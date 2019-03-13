@@ -4,7 +4,8 @@ LABEL MAINTAINER="zhouwei" email='xiaomao361@163.com'
 
 WORKDIR /home
 
-RUN pip install django
+ADD requirements.txt /home/
+RUN pip install -r requirements.txt
 ADD ems /home/ems
 ADD mysite /home/mysite
 ADD manage.py /home/manage.py
