@@ -34,9 +34,9 @@ def log_in(request):
                 logger.info('[Success] ' + username + ' has logged in!')
                 return redirect('/index/')
             else:
-                message = "密码错误或未激活"
+                message = "用户未激活"
         else:
-            message = "用户不存在！"
+            message = "用户验证未通过"
         logger.warning('[Failed] ' + username + ' failed to login!')
         return render(request, 'login.html', {"message": message})
     else:
@@ -75,6 +75,8 @@ def result(request):
 
 
 # 设备详情页面
+
+
 @login_required
 def detail(request):
     if request.method == "GET":
@@ -238,6 +240,14 @@ def export_equs_csv(request):
     for equ in reversed(equs):
         writer.writerow(equ)
     return response
+
+# lock
+
+
+def lockscreen(request):
+    user = request.user
+    auth.logout(request)
+    return render(request, 'lockscreen.html', {'page': 'lockscreen', 'user': user})
 
 # login for normal userg
 # def login(request):

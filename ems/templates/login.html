@@ -32,9 +32,9 @@
     
       {% if message %}
       <div class=" alert alert-warning">{{ message }}</div>
-      {% endif %}
+    {% endif %}
 
-      {% csrf_token %}
+    {% csrf_token %}
     <div class="form-group has-feedback">
         <input type="text" name="username" class="form-control" placeholder="username" autofocus required>
 
@@ -58,12 +58,10 @@
         <!-- /.col -->
     </div>
     </form>
-
-
     <p class="mb-1">
         <a href="#">I forgot my password</a>
     </p>
-    
+
     </div>
     <!-- /.login-card-body -->
     </div>
@@ -71,8 +69,7 @@
     <!-- /.login-box -->
 
     <!-- jQuery -->
-    <script src="{% static 'plugins/jquery/jquery.min.js' %}">
-    </script>
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
     <!-- Bootstrap 4 -->
     <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <!-- iCheck -->
