@@ -11,6 +11,7 @@ ADD mysite /home/mysite
 ADD manage.py /home/manage.py
 ADD static /home/static
 ADD db.sqlite3 /home/
+RUN mkdir /home/backup
 
 ADD entrypoint.sh /usr/bin/entrypoint.sh
 
