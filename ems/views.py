@@ -1,5 +1,11 @@
 from django.shortcuts import render, redirect
-import logging, json, crypt, hashlib, time, os
+import logging
+import json
+import crypt
+import hashlib
+import time
+import os
+import csv
 from ems import models
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth, admin
@@ -50,12 +56,16 @@ def index(request):
     return render(request, 'index.html', {'page': 'Dashboard', 'notices': notices})
 
 # 设备总览
+
+
 @login_required
 def equipment(request):
     equs = models.Equipment.objects.all()
     return render(request, 'equipment.html', {'page': 'Equipment', 'equs': equs})
 
 # 结果展示页面
+
+
 @login_required
 def result(request):
     if request.method == "GET":
@@ -102,6 +112,8 @@ def detail(request):
                        'timelines': timelines})
 
 # open api
+
+
 @login_required
 def apps(request):
     apps = models.OpenApp.objects.all()
@@ -121,6 +133,7 @@ def del_app(request):
     app_id = request.GET['app_id']
     models.OpenApp.objects.get(app_id=app_id).delete()
     return redirect('/apps/')
+
 
 @csrf_exempt
 def get_equipment(request):
@@ -174,6 +187,8 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
 
 # data
+
+
 @login_required
 def datas(request):
     datas = models.BakData.objects.all()
@@ -196,11 +211,33 @@ def del_data(request):
     os.system('rm -rf ./backup/' + name)
     return redirect('/datas/')
 
+
 @login_required
 def load_data(request):
     name = request.GET['name']
     os.system('python manage.py loaddata' + name)
     return redirect('/datas/')
+
+# finicial
+
+
+@login_required
+def finicial(request):
+    equs = models.Equipment.objects.all()
+    return render(request, 'finicial.html', {'page': 'finicial', 'equs': equs})
+
+
+def export_equs_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="ems.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['资产编号', '资产类别', '资产名称', 'SN码',
+                     '状态', '使用人', '采购价格', '卖出价格', '备注'])
+    equs = models.Equipment.objects.all().values_list('id', 'category', 'name', 'sn',
+                                                      'state', 'user', 'price_in', 'price_out', 'remark')
+    for equ in reversed(equs):
+        writer.writerow(equ)
+    return response
 
 # login for normal userg
 # def login(request):

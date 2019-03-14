@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^logout/', views.logout),
     url(r'^index/', views.index),
     url(r'^equipment/', views.equipment),
+    url(r'^finicial/', views.finicial),
     url(r'^apps/', views.apps),
     url(r'^add_app/', views.add_app),
     url(r'^del_app/', views.del_app),
@@ -53,6 +54,7 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^api/', include(router.urls)),
     url(r'^get_equipment/', views.get_equipment),
+    url(r'^export/', views.export_equs_csv),
     # drf登录
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
