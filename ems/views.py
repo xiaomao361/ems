@@ -220,6 +220,7 @@ def load_data(request):
     os.system('python manage.py loaddata' + name)
     return redirect('/datas/')
 
+
 @login_required
 def download_data(request):
     name = request.GET['name']
@@ -257,6 +258,35 @@ def lockscreen(request):
     user = request.user
     auth.logout(request)
     return render(request, 'lockscreen.html', {'page': 'lockscreen', 'user': user})
+
+# notice
+
+
+@login_required
+def notices(request):
+    notices = models.Notice.objects.all()
+    return render(request, 'notices.html', {'page': 'notices', 'notices': notices})
+
+
+@login_required
+def notice(request):
+    if request.method == "GET":
+        id = request.GET['id']
+        notice = models.Notice.objects.get(id=id)
+        if notice.is_read == 0:
+            notice.is_read = 1
+            notice.save()
+        return render(request, 'notice.html', {'page': 'notice', 'notice': notice})
+
+def del_notice(request):
+    if request.method == "GET":
+        id = request.GET['id']
+        notice = models.Notice.objects.get(id=id).delete()
+        return redirect('/notices/')
+
+def read_all_notices(request):
+    models.Notice.objects.filter(is_read=0).update(is_read=1)
+    return redirect('/index/')
 
 # login for normal userg
 # def login(request):

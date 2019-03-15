@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} 消息 {% endblock %}
+
+{% block css %}
+<!-- Ionicons -->
+<link rel="stylesheet" href="{% static 'adminlte/css/ionicons.min.css' %}">
+<!-- iCheck -->
+<link rel="stylesheet" href="{% static 'plugins/iCheck/flat/blue.css' %}">
+{% endblock %}
+
+{% block content %}
+<!--startprint-->
+<div class="card card-primary card-outline">
+    <!-- /.card-header -->
+    <div class="card-body p-0">
+        <div class="mailbox-read-info">
+            <h5>{{notice.title}}</h5>
+            <h6><span class="mailbox-read-time float-right">{{notice.c_time|date:"Y-m-d H:i:s"}}</span></h6>
+        </div>
+        <div class="mailbox-read-message">
+            {{notice.content}}
+        </div>
+        <!-- /.mailbox-read-message -->
+    </div>
+    <div class="card-footer">
+        <button type="button" class="btn btn-default"><i class="fa fa-trash-o"></i><a href="/del_notice?id={{notice.id}}">Delete</a></button>
+        <button type="button" class="btn btn-default" onclick="doPrint()" ><i class="fa fa-print"></i> Print</button>
+    </div>
+    <!-- /.card-footer -->
+</div>
+<!--endprint-->
+<script>
+    var doPrint = function () {
+        bdhtml = window.document.body.innerHTML;
+        sprnstr = "<!--startprint-->";
+        eprnstr = "<!--endprint-->";
+        prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17);
+        prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));
+        window.document.body.innerHTML = prnhtml;
+        window.print()
+    }
+</script>
+{% endblock %}

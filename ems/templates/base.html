@@ -56,22 +56,19 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell-o"></i>
-                        <span class="badge badge-warning navbar-badge">{{ notices|length }}</span>
+                        <span class="badge badge-warning navbar-badge">{{ not_read_notices|length }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-item dropdown-header">{{ notices|length }} 条通知</span>
+                        <span class="dropdown-item dropdown-header">{{ not_read_notices|length }} 条通知</span>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fa fa-envelope mr-2"></i> {{ notices|length }} 条新消息
-                            <span class="float-right text-muted text-sm">3 mins</span>
+                        {% for not_read_notice in not_read_notices %}
+                        <a href="/notice/?id={{not_read_notice.id}}" class="dropdown-item">
+                            <i class="fa fa-envelope mr-2"></i> {{ not_read_notice.title }}
+                            <span class="float-right text-muted text-sm">{{not_read_notices.c_time}}</span>
                         </a>
+                        {% endfor %}
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fa fa-file mr-2"></i> {{ notices|length }} 条新回复
-                            <span class="float-right text-muted text-sm">2 days</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">标记所有消息为已读</a>
+                        <a href="/read_all_notices/" class="dropdown-item dropdown-footer">标记所有消息为已读</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -178,12 +175,12 @@
                             </a>
                         </li>
                         <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
+                            <a href="/notices/" class="nav-link">
                                 <i class="nav-icon fa fa-envelope-o"></i>
                                 <p>
                                     消息管理
-                                    {% if  notices|length >= 1 %}
-                                    <span class="badge badge-info right">{{ notices|length }}</span>
+                                    {% if  not_read_notices|length >= 1 %}
+                                    <span class="badge badge-info right">{{ not_read_notices|length }}</span>
                                     {% endif %}
                                 </p>
                             </a>
@@ -309,7 +306,7 @@
         <script src="{% static 'plugins/chartjs-old/Chart.min.js' %}"></script>
 
         <!-- PAGE SCRIPTS -->
-        <script src="{% static 'adminlte/js/pages/dashboard2.js' %}"></script>
+        <!-- <script src="{% static 'adminlte/js/pages/dashboard2.js' %}"></script> -->
         {% block script %}{% endblock %}
 </body>
 
