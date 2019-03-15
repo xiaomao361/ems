@@ -220,6 +220,15 @@ def load_data(request):
     os.system('python manage.py loaddata' + name)
     return redirect('/datas/')
 
+@login_required
+def download_data(request):
+    name = request.GET['name']
+    file = open('./backup/' + name, 'rb')
+    response = HttpResponse(file)
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="backup.json"'
+    return response
+
 # finicial
 
 

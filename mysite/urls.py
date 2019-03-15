@@ -49,6 +49,7 @@ urlpatterns = [
     url(r'^del_data/', views.del_data),
     url(r'^add_data/', views.add_data),
     url(r'^load_data/', views.load_data),
+    url(r'^download_data/', views.download_data),
     url(r'^detail/', views.detail),
     url(r'^result/', views.result),
     url(r'^$', views.index),
