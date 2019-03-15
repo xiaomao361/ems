@@ -195,3 +195,12 @@ SWAGGER_SETTINGS = {
     'VALIDATOR_URL': None,
 }
 CSRF_COOKIE_SECURE = True 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+  
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'postmaster@mail.zhou-wei.com'
+EMAIL_HOST_PASSWORD = '7438f3be65b176adab025919bcce084f'
+DEFAULT_FROM_EMAIL = 'postmaster@mail.zhou-wei.com'

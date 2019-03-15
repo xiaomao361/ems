@@ -58,29 +58,17 @@
                                 <td>{{ equ.sn }}</td>
 
                                 {% if equ.state == "useing" %}
-                                <td>
-                                    <i class="nav-icon fa fa-circle-o text-success">使用中</i>
-                                </td>
+                                <td>使用中</td>
                                 {% elif equ.state == "problem" %}
-                                <td>
-                                    <i class="nav-icon fa fa-circle-o text-warning">问题</i>
-                                </td>
+                                <td>问题</td>
                                 {% elif equ.state == "unused" %}
-                                <td>
-                                    <i class="nav-icon fa fa-circle-o text-default">库存</i>
-                                </td>
+                                <td>库存</td>
                                 {% elif equ.state == "scrap" %}
-                                <td>
-                                    <i class="nav-icon fa fa-circle-o text-danger">报废</i>
-                                </td>
+                                <td>报废</td>
                                 {% elif equ.state == "fixing" %}
-                                <td>
-                                    <i class="nav-icon fa fa-circle-o text-info">维修中</i>
-                                </td>
+                                <td>维修中</td>
                                 {% elif equ.state == "sell" %}
-                                <td>
-                                    <i class="nav-icon fa fa-circle-o text-info">卖出</i>
-                                </td>
+                                <td>卖出</td>
                                 {% endif %}
 
                                 <td>{{ equ.user }}</td>
@@ -101,20 +89,7 @@
                                 </td>
                             </tr>
                             {% endfor %}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>资产编号</th>
-                                <th>资产类别</th>
-                                <th>资产名称</th>
-                                <th>SN码</th>
-                                <th>状态</th>
-                                <th>使用人</th>
-                                <th>采购价格</th>
-                                <th>卖出价格</th>
-                                <th>备注</th>
-                            </tr>
-                        </tfoot>
+                        </tbody>  
                     </table>
                 </div>
                 <!-- /.card-body -->
@@ -152,12 +127,12 @@
         });
     });
     var doPrint = function () {
-        bdhtml=window.document.body.innerHTML;      
-        sprnstr="<!--startprint-->";      
-        eprnstr="<!--endprint-->";      
-        prnhtml=bdhtml.substr(bdhtml.indexOf(sprnstr)+17);      
-        prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));      
-        window.document.body.innerHTML=prnhtml;   
+        bdhtml = window.document.body.innerHTML;
+        sprnstr = "<!--startprint-->";
+        eprnstr = "<!--endprint-->";
+        prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17);
+        prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));
+        window.document.body.innerHTML = prnhtml;
         window.print()
     }
 </script>
