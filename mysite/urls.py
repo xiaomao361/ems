@@ -33,6 +33,7 @@ schema_view = get_schema_view(title='open api', renderer_classes=[
     OpenAPIRenderer, SwaggerUIRenderer])
 
 urlpatterns = [
+    url(r'^admin/doc/',include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
     url(r'^admin/timeline/', include('admin_timeline.urls')),
     url(r'^docs/', schema_view, name='docs'),
