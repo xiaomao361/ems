@@ -53,6 +53,8 @@ urlpatterns = [
     url(r'^download_data/', views.download_data),
     url(r'^detail/', views.detail),
     url(r'^result/', views.result),
+    url(r'^contact/', views.contact),
+    url(r'^send_email/', views.send_email),
     url(r'^$', views.index),
     url(r'^api/', include(router.urls)),
     url(r'^get_equipment/', views.get_equipment),

@@ -202,9 +202,16 @@ CSRF_COOKIE_SECURE = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
   
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.mailgun.org'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'postmaster@mail.zhou-wei.com'
-EMAIL_HOST_PASSWORD = '7438f3be65b176adab025919bcce084f'
-DEFAULT_FROM_EMAIL = 'postmaster@mail.zhou-wei.com'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.mailgun.org'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'postmaster@mail.zhou-wei.com'
+# EMAIL_HOST_PASSWORD = '7438f3be65b176adab025919bcce084f'
+# DEFAULT_FROM_EMAIL = 'postmaster@mail.zhou-wei.com'
+
+EMAIL_USE_TLS = False
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'xiaomao361@163.com'
+EMAIL_HOST_PASSWORD = 'Zhouwei19891011.'
+DEFAULT_FROM_EMAIL = 'xiaomao361@163.com'

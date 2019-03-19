@@ -18,6 +18,7 @@ from datetime import datetime
 from django.core import serializers
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
 
 logger = logging.getLogger('django')
 
@@ -278,15 +279,35 @@ def notice(request):
             notice.save()
         return render(request, 'notice.html', {'page': 'notice', 'notice': notice})
 
+
 def del_notice(request):
     if request.method == "GET":
         id = request.GET['id']
         notice = models.Notice.objects.get(id=id).delete()
         return redirect('/notices/')
 
+
 def read_all_notices(request):
     models.Notice.objects.filter(is_read=0).update(is_read=1)
     return redirect('/index/')
+
+# contact
+
+
+@login_required
+def contact(request):
+    pass
+    return render(request, 'contact.html', {'page': 'contact'})
+
+
+def send_email(request):
+    if request.method == "POST":
+        to = request.POST['to']
+        subject = request.POST['subject']
+        content = request.POST['content']
+        send_mail(subject, content, 'xiaomao361@163.com',
+                  [to], fail_silently=False)
+    return render(request, 'contact.html', {"message": '发送成功'})
 
 # login for normal userg
 # def login(request):
