@@ -51,10 +51,30 @@ def logout(request):
 
 
 # 首页
+def get_equ_num_with_state(state):
+    return len(models.Equipment.objects.filter(state=state))
+
+
 @login_required
 def index(request):
-    notices = models.Notice.objects.all()
-    return render(request, 'index.html', {'page': 'Dashboard', 'notices': notices})
+    sum_price = 0
+    equs = models.Equipment.objects.all()
+    for equ in equs:
+        sum_price = sum_price + int(equ.price_in)
+    users = models.User.objects.all()
+    problem_num = get_equ_num_with_state('fixing') \
+        + get_equ_num_with_state('scrap') \
+        + get_equ_num_with_state('problem')
+    unused_num = get_equ_num_with_state('unused')
+    failure_rate = round(problem_num/len(equs), 2) * 100
+    return render(request, 'index.html',
+                  {'page': 'Dashboard',
+                   'equs_num': len(equs),
+                   'users': users,
+                   'problem_num': problem_num,
+                   'unused_num': unused_num,
+                   'failure_rate': failure_rate,
+                   'sum_price': sum_price})
 
 # 设备总览
 

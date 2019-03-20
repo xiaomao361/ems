@@ -29,6 +29,7 @@ class User(models.Model):
                            default="男", verbose_name='性别')
     department = models.CharField(
         max_length=32, choices=departments, default="", verbose_name='所属部门')
+    img = models.CharField(max_length=128, default="", verbose_name='头像')
     c_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -176,3 +177,13 @@ class BakData(models.Model):
         ordering = ["-c_time"]
         verbose_name = "name"
         verbose_name_plural = "name"
+
+class Joke(models.Model):
+    content = models.CharField(max_length=128, unique=True, verbose_name='内容')
+    c_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content
+
+    class Meta:
+        ordering = ["-c_time"]

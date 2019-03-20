@@ -20,8 +20,7 @@
           <div class="info-box-content">
             <span class="info-box-text">设备总量</span>
             <span class="info-box-number">
-              10
-              <small>%</small>
+              {{ equs_num }}
             </span>
           </div>
           <!-- /.info-box-content -->
@@ -31,11 +30,11 @@
       <!-- /.col -->
       <div class="col-12 col-sm-6 col-md-3">
         <div class="info-box mb-3">
-          <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-google-plus"></i></span>
+          <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-heart-o"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">设备故障数</span>
-            <span class="info-box-number">41,410</span>
+            <span class="info-box-number">{{problem_num}}</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -52,7 +51,7 @@
 
           <div class="info-box-content">
             <span class="info-box-text">空闲设备</span>
-            <span class="info-box-number">760</span>
+            <span class="info-box-number">{{unused_num}}</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -65,7 +64,7 @@
 
           <div class="info-box-content">
             <span class="info-box-text">员工人数</span>
-            <span class="info-box-number">2,000</span>
+            <span class="info-box-number">{{users|length}}</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -290,10 +289,10 @@
             <!-- USERS LIST -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Latest Members</h3>
+                <h3 class="card-title">员工</h3>
 
                 <div class="card-tools">
-                  <span class="badge badge-danger">8 New Members</span>
+                  <span class="badge badge-danger">{{users|length}}名员工</span>
                   <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                   </button>
                   <button type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-times"></i>
@@ -303,52 +302,18 @@
               <!-- /.card-header -->
               <div class="card-body p-0">
                 <ul class="users-list clearfix">
+                  {% for user in users %}
                   <li>
-                    <img src="{% static 'adminlte/img/user1-128x128.jpg' %}" alt="User Image">
-                    <a class="users-list-name" href="#">Alexander Pierce</a>
-                    <span class="users-list-date">Today</span>
+                    <img src="{% static user.img %}" alt="User Image">
+                    <a class="users-list-name" href="#">{{user.full_name}}</a>
+                    <span class="users-list-date">{{user.c_time}}</span>
                   </li>
-                  <li>
-                    <img src="{% static 'adminlte/img/user8-128x128.jpg' %}" alt="User Image">
-                    <a class="users-list-name" href="#">Norman</a>
-                    <span class="users-list-date">Yesterday</span>
-                  </li>
-                  <li>
-                    <img src="{% static 'adminlte/img/user7-128x128.jpg' %}" alt="User Image">
-                    <a class="users-list-name" href="#">Jane</a>
-                    <span class="users-list-date">12 Jan</span>
-                  </li>
-                  <li>
-                    <img src="{% static 'adminlte/img/user6-128x128.jpg' %}" alt="User Image">
-                    <a class="users-list-name" href="#">John</a>
-                    <span class="users-list-date">12 Jan</span>
-                  </li>
-                  <li>
-                    <img src="{% static 'adminlte/img/user2-160x160.jpg' %}" alt="User Image">
-                    <a class="users-list-name" href="#">Alexander</a>
-                    <span class="users-list-date">13 Jan</span>
-                  </li>
-                  <li>
-                    <img src="{% static 'adminlte/img/user5-128x128.jpg' %}" alt="User Image">
-                    <a class="users-list-name" href="#">Sarah</a>
-                    <span class="users-list-date">14 Jan</span>
-                  </li>
-                  <li>
-                    <img src="{% static 'adminlte/img/user4-128x128.jpg' %}" alt="User Image">
-                    <a class="users-list-name" href="#">Nora</a>
-                    <span class="users-list-date">15 Jan</span>
-                  </li>
-                  <li>
-                    <img src="{% static 'adminlte/img/user3-128x128.jpg' %}" alt="User Image">
-                    <a class="users-list-name" href="#">Nadia</a>
-                    <span class="users-list-date">15 Jan</span>
-                  </li>
-                </ul>
+                  {% endfor %}
                 <!-- /.users-list -->
               </div>
               <!-- /.card-body -->
               <div class="card-footer text-center">
-                <a href="javascript::">View All Users</a>
+                <a href="/admin/ems/user/">所有员工</a>
               </div>
               <!-- /.card-footer -->
             </div>
@@ -459,12 +424,12 @@
 
       <div class="col-md-4">
         <!-- Info Boxes Style 2 -->
-        <div class="info-box mb-3 bg-warning">
-          <span class="info-box-icon"><i class="fa fa-tag"></i></span>
+        <div class="info-box mb-3 bg-info">
+          <span class="info-box-icon"><i class="fa fa-money"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Inventory</span>
-            <span class="info-box-number">5,200</span>
+            <span class="info-box-text">采购总金额</span>
+            <span class="info-box-number">¥{{sum_price}}</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -480,16 +445,16 @@
         </div>
         <!-- /.info-box -->
         <div class="info-box mb-3 bg-danger">
-          <span class="info-box-icon"><i class="fa fa-cloud-download"></i></span>
+          <span class="info-box-icon"><i class="fa fa-times"></i></span>
 
           <div class="info-box-content">
-            <span class="info-box-text">Downloads</span>
-            <span class="info-box-number">114,381</span>
+            <span class="info-box-text">设备故障率</span>
+            <span class="info-box-number">{{failure_rate}}%</span>
           </div>
           <!-- /.info-box-content -->
         </div>
         <!-- /.info-box -->
-        <div class="info-box mb-3 bg-info">
+        <div class="info-box mb-3 bg-warning">
           <span class="info-box-icon"><i class="fa fa-comment-o"></i></span>
 
           <div class="info-box-content">
