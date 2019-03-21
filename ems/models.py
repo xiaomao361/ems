@@ -153,7 +153,8 @@ class Notice(models.Model):
 
 
 class OpenApp(models.Model):
-    app_id = models.CharField(max_length=128, unique=True, verbose_name='app_id')
+    app_id = models.CharField(
+        max_length=128, unique=True, verbose_name='app_id')
     app_key = models.TextField(max_length=256, verbose_name='app_key')
     c_time = models.DateTimeField(auto_now_add=True)
 
@@ -164,6 +165,7 @@ class OpenApp(models.Model):
         ordering = ["-c_time"]
         verbose_name = "app_id"
         verbose_name_plural = "app_id"
+
 
 class BakData(models.Model):
     name = models.CharField(max_length=128, unique=True, verbose_name='name')
@@ -177,6 +179,7 @@ class BakData(models.Model):
         ordering = ["-c_time"]
         verbose_name = "name"
         verbose_name_plural = "name"
+
 
 class Joke(models.Model):
     content = models.CharField(max_length=128, unique=True, verbose_name='内容')

@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import Equipment
 from django.contrib.auth.models import User, Group
 
+
 class EquipmentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Equipment
