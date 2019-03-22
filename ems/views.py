@@ -67,6 +67,7 @@ def index(request):
         + get_equ_num_with_state('problem')
     unused_num = get_equ_num_with_state('unused')
     failure_rate = round(problem_num/len(equs), 2) * 100
+    risks = models.Risk.objects.all()
     return render(request, 'index.html',
                   {'page': '仪表盘',
                    'equs_num': len(equs),
@@ -74,7 +75,8 @@ def index(request):
                    'problem_num': problem_num,
                    'unused_num': unused_num,
                    'failure_rate': failure_rate,
-                   'sum_price': sum_price})
+                   'sum_price': sum_price,
+                   'risks_num': len(risks)})
 
 # 设备总览
 

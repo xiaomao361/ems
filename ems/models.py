@@ -182,7 +182,7 @@ class BakData(models.Model):
 
 
 class Joke(models.Model):
-    content = models.CharField(max_length=128, unique=True, verbose_name='内容')
+    content = models.CharField(max_length=128, verbose_name='内容')
     c_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -190,3 +190,29 @@ class Joke(models.Model):
 
     class Meta:
         ordering = ["-c_time"]
+
+
+class Risk(models.Model):
+    gender = (
+        ('normal', "一般"),
+        ('warning', "警告"),
+        ('danger', "严重"),
+    )
+
+    title = models.CharField(max_length=128, verbose_name='标题')
+    content = models.TextField(
+        max_length=256, default="", blank=True, verbose_name='内容')
+    is_fix = models.BooleanField(default=False, verbose_name='是否解决')
+    level = models.CharField(max_length=32, choices=gender,
+                             default="一般", verbose_name='等级')
+    refer_equ = models.ForeignKey(
+        'Equipment', on_delete=models.CASCADE, verbose_name='相关设备',  related_name='equipment')
+    c_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ["-c_time"]
+        verbose_name = "风险点"
+        verbose_name_plural = "风险点"
