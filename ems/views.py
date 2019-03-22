@@ -68,7 +68,7 @@ def index(request):
     unused_num = get_equ_num_with_state('unused')
     failure_rate = round(problem_num/len(equs), 2) * 100
     return render(request, 'index.html',
-                  {'page': 'Dashboard',
+                  {'page': '仪表盘',
                    'equs_num': len(equs),
                    'users': users,
                    'problem_num': problem_num,
@@ -314,7 +314,6 @@ def read_all_notices(request):
 # contact
 
 
-@login_required
 def contact(request):
     pass
     return render(request, 'contact.html', {'page': 'contact'})
