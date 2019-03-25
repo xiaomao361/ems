@@ -76,7 +76,16 @@ def index(request):
                    'unused_num': unused_num,
                    'failure_rate': failure_rate,
                    'sum_price': sum_price,
-                   'risks_num': len(risks)})
+                   'risks_num': len(risks),
+                   'risks': risks})
+
+def risk_fix(request):
+    id = request.GET['id']
+    risk = models.Risk.objects.get(id=id)
+    if risk.is_fix == 0:
+        risk.is_fix = 1
+        risk.save()
+    return redirect('/index/')
 
 # 设备总览
 
