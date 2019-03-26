@@ -70,6 +70,7 @@ def index(request):
     risks = models.Risk.objects.all()
     chats = models.Chat.objects.order_by("c_time")
     not_read_chat = models.Chat.objects.filter(is_read=0)
+    sells = models.Could_sell.objects.all()
     return render(request, 'index.html',
                   {'page': '仪表盘',
                    'equs_num': len(equs),
@@ -81,7 +82,8 @@ def index(request):
                    'risks_num': len(risks),
                    'risks': risks,
                    'chats': chats,
-                   'not_read_chat': not_read_chat})
+                   'not_read_chat': not_read_chat,
+                   'sells': sells})
 
 
 def risk_fix(request):
@@ -99,7 +101,7 @@ def send_chat(request):
         # chat_from_id = request.GET['chat_from_id']
         # chat_to_id = request.GET['usechat_to_idr_id']
         chat = models.Chat(
-        content=content, chat_from_id='1', chat_to_id='2')
+            content=content, chat_from_id='1', chat_to_id='2')
         chat.save()
     return redirect('/index/')
 

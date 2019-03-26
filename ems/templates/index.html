@@ -276,7 +276,7 @@
 
           <div class="info-box-content">
             <span class="info-box-text">可售出设备</span>
-            <span class="info-box-number">2</span>
+            <span class="info-box-number">{{ sells | length}}</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -304,7 +304,7 @@
         <!-- PRODUCT LIST -->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Recently Added Products</h3>
+            <h3 class="card-title">设备售出建议</h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-widget="collapse">
@@ -318,66 +318,31 @@
           <!-- /.card-header -->
           <div class="card-body p-0">
             <ul class="products-list product-list-in-card pl-2 pr-2">
+              {% for sell in sells %}
               <li class="item">
                 <div class="product-img">
-                  <img src="{% static 'adminlte/img/default-150x150.png' %}" alt="Product Image" class="img-size-50">
+                  <img src="{% static sell.equ.img %}" alt="Product Image" class="img-size-50">
                 </div>
                 <div class="product-info">
-                  <a href="javascript:void(0)" class="product-title">Samsung TV
-                    <span class="badge badge-warning float-right">$1800</span></a>
+                  <a href="/admin/ems/could_sell/{{sell.id}}" class="product-title">{{sell.equ}}
+                      {% if sell.equ.state == "problem" %}
+                      <span class="badge badge-warning float-right">¥{{sell.advice_price}}</span></a>
+                      {% elif sell.equ.state == "unused" %}
+                      <span class="badge badge-info float-right">¥{{sell.advice_price}}</span></a>
+                      {% elif sell.equ.state == "scrap" %}
+                      <span class="badge badge-danger float-right">¥{{sell.advice_price}}</span></a>
+                      {% endif %}
                   <span class="product-description">
-                    Samsung 32" 1080p 60Hz LED Smart HDTV.
+                    {{sell.content}}
                   </span>
                 </div>
               </li>
-              <!-- /.item -->
-              <li class="item">
-                <div class="product-img">
-                  <img src="{% static 'adminlte/img/default-150x150.png' %}" alt="Product Image" class="img-size-50">
-                </div>
-                <div class="product-info">
-                  <a href="javascript:void(0)" class="product-title">Bicycle
-                    <span class="badge badge-info float-right">$700</span></a>
-                  <span class="product-description">
-                    26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                  </span>
-                </div>
-              </li>
-              <!-- /.item -->
-              <li class="item">
-                <div class="product-img">
-                  <img src="{% static 'adminlte/img/default-150x150.png' %}" alt="Product Image" class="img-size-50">
-                </div>
-                <div class="product-info">
-                  <a href="javascript:void(0)" class="product-title">
-                    Xbox One <span class="badge badge-danger float-right">
-                      $350
-                    </span>
-                  </a>
-                  <span class="product-description">
-                    Xbox One Console Bundle with Halo Master Chief Collection.
-                  </span>
-                </div>
-              </li>
-              <!-- /.item -->
-              <li class="item">
-                <div class="product-img">
-                  <img src="{% static 'adminlte/img/default-150x150.png' %}" alt="Product Image" class="img-size-50">
-                </div>
-                <div class="product-info">
-                  <a href="javascript:void(0)" class="product-title">PlayStation 4
-                    <span class="badge badge-success float-right">$399</span></a>
-                  <span class="product-description">
-                    PlayStation 4 500GB Console (PS4)
-                  </span>
-                </div>
-              </li>
-              <!-- /.item -->
+              {% endfor %}
             </ul>
           </div>
           <!-- /.card-body -->
           <div class="card-footer text-center">
-            <a href="javascript:void(0)" class="uppercase">View All Products</a>
+            <a href="/admin/ems/could_sell/" class="uppercase">查看所有建议出售设备</a>
           </div>
           <!-- /.card-footer -->
         </div>

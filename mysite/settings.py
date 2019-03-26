@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -139,10 +139,10 @@ LOGIN_URL = '/login/'
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,#此选项开启表示禁用部分日志，不建议设置为True
+    'disable_existing_loggers': False,  # 此选项开启表示禁用部分日志，不建议设置为True
     'formatters': {
         'verbose': {
-            'format': '%(levelname)s %(asctime)s %(message)s'#日志格式
+            'format': '%(levelname)s %(asctime)s %(message)s'  # 日志格式
         },
         'simple': {
             'format': '%(levelname)s %(message)s'
@@ -150,7 +150,7 @@ LOGGING = {
     },
     'filters': {
         'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',#过滤器，只有当setting的DEBUG = True时生效
+            '()': 'django.utils.log.RequireDebugTrue',  # 过滤器，只有当setting的DEBUG = True时生效
         },
     },
     'handlers': {
@@ -160,15 +160,15 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
-        'file': {#重点配置部分
+        'file': {  # 重点配置部分
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': './debug.log',#日志保存文件
-            'formatter': 'verbose'#日志格式，与上边的设置对应选择
-                }
+            'filename': './debug.log',  # 日志保存文件
+            'formatter': 'verbose'  # 日志格式，与上边的设置对应选择
+        }
     },
     'loggers': {
-        'django': {#日志记录器
+        'django': {  # 日志记录器
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': True,
@@ -180,7 +180,7 @@ LOGGING = {
 SWAGGER_SETTINGS = {
     # 基础样式
     'SECURITY_DEFINITIONS': {
-        "basic":{
+        "basic": {
             'type': 'basic'
         }
     },
@@ -199,10 +199,10 @@ SWAGGER_SETTINGS = {
     'OPERATIONS_SORTER': 'alpha',
     'VALIDATOR_URL': None,
 }
-CSRF_COOKIE_SECURE = True 
+CSRF_COOKIE_SECURE = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-  
+
 # EMAIL_USE_TLS = True
 # EMAIL_HOST = 'smtp.mailgun.org'
 # EMAIL_PORT = 587
@@ -218,8 +218,9 @@ EMAIL_HOST_PASSWORD = 'Zhouwei19891011.'
 DEFAULT_FROM_EMAIL = 'xiaomao361@163.com'
 
 CRONJOBS = [
-    ('0 0 * * *', 'ems.cron.printer_check','>>/tmp/ems_cron.log'),
-    ('0 0 * * *', 'ems.cron.backup_data','>>/tmp/ems_cron.log'),
-    ('0 1 * * *', 'ems.cron.warranty_check','>>/tmp/ems_cron.log'),
-    ('0 2 * * *', 'ems.cron.backup_check','>>/tmp/ems_cron.log')
+    ('0 0 * * *', 'ems.cron.printer_check', '>>/tmp/ems_cron.log'),
+    ('0 0 * * *', 'ems.cron.backup_data', '>>/tmp/ems_cron.log'),
+    ('0 1 * * *', 'ems.cron.warranty_check', '>>/tmp/ems_cron.log'),
+    ('0 2 * * *', 'ems.cron.backup_check', '>>/tmp/ems_cron.log'),
+    ('0 4 * * *', 'ems.cron.could_sell_check', '>>/tmp/ems_cron.log'),
 ]

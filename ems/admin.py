@@ -10,7 +10,7 @@ admin.site.register(models.OpenApp)
 admin.site.register(models.Joke)
 # admin.site.register(models.Risk)
 admin.site.register(models.Chat)
-admin.site.register(models.Could_sell)
+# admin.site.register(models.Could_sell)
 
 admin.site.site_title = "EMS manager"
 admin.site.site_header = "EMS manager"
@@ -69,6 +69,22 @@ class LogEntryAdmin(admin.ModelAdmin):
 
 @admin.register(models.Risk)
 class RiskAdmin(admin.ModelAdmin):
+    actions = None
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        if obj is None:
+            return True
+        else:
+            return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+@admin.register(models.Could_sell)
+class Could_sellAdmin(admin.ModelAdmin):
     actions = None
 
     def has_add_permission(self, request):
