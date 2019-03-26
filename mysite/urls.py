@@ -65,6 +65,7 @@ urlpatterns = [
     url(r'^del_notice/', views.del_notice),
     url(r'^read_all_notices/', views.read_all_notices),
     url(r'^risk_fix/', views.risk_fix),
+    url(r'^send_chat/', views.send_chat),
     # drf登录
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

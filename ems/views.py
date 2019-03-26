@@ -68,6 +68,8 @@ def index(request):
     unused_num = get_equ_num_with_state('unused')
     failure_rate = round(problem_num/len(equs), 2) * 100
     risks = models.Risk.objects.all()
+    chats = models.Chat.objects.order_by("c_time")
+    not_read_chat = models.Chat.objects.filter(is_read=0)
     return render(request, 'index.html',
                   {'page': '仪表盘',
                    'equs_num': len(equs),
@@ -77,7 +79,10 @@ def index(request):
                    'failure_rate': failure_rate,
                    'sum_price': sum_price,
                    'risks_num': len(risks),
-                   'risks': risks})
+                   'risks': risks,
+                   'chats': chats,
+                   'not_read_chat': not_read_chat})
+
 
 def risk_fix(request):
     id = request.GET['id']
@@ -85,6 +90,18 @@ def risk_fix(request):
     if risk.is_fix == 0:
         risk.is_fix = 1
         risk.save()
+    return redirect('/index/')
+
+
+def send_chat(request):
+    if request.method == "POST":
+        content = request.POST['content']
+        # chat_from_id = request.GET['chat_from_id']
+        # chat_to_id = request.GET['usechat_to_idr_id']
+        print(content)
+        chat = models.Chat(
+        content=content, chat_from_id='1', chat_to_id='2')
+        chat.save()
     return redirect('/index/')
 
 # 设备总览

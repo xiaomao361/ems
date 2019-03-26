@@ -216,3 +216,22 @@ class Risk(models.Model):
         ordering = ["-c_time"]
         verbose_name = "风险点"
         verbose_name_plural = "风险点"
+
+
+class Chat(models.Model):
+    content = models.TextField(
+        max_length=256, default="", blank=True, verbose_name='内容')
+    chat_from = models.ForeignKey(
+        'User', on_delete=models.CASCADE, related_name="chat_from", default="", null=True, verbose_name='发送人')
+    chat_to = models.ForeignKey(
+        'User', on_delete=models.CASCADE, related_name="chat_to", default="", null=True, verbose_name='接收人')
+    is_read = models.BooleanField(default=False, verbose_name='是否已读')
+    c_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content
+
+    class Meta:
+        ordering = ["-c_time"]
+        verbose_name = "聊天"
+        verbose_name_plural = "聊天"
