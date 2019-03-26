@@ -67,6 +67,7 @@ class LogEntryAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
 
+
 @admin.register(models.Risk)
 class RiskAdmin(admin.ModelAdmin):
     actions = None
@@ -82,6 +83,7 @@ class RiskAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
 
 @admin.register(models.Could_sell)
 class Could_sellAdmin(admin.ModelAdmin):

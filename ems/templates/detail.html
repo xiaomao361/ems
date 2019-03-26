@@ -143,37 +143,37 @@
 
                                         <div class="timeline-body">
                                             {% for v in data.changes %}
-                                                {% if v.field == 'img' %}
-                                                    将图片地址修改为{{v.new}}
-                                                {% elif v.field == 'state' %}
-                                                    将状态修改为
-                                                    {% if v.new == 'unused' %}
-                                                    库存
-                                                    {% elif v.new == 'useing' %}
-                                                    使用中
-                                                    {% elif v.new == 'fixing' %}
-                                                    维修中
-                                                    {% elif v.new == 'scrap' %}
-                                                    报废
-                                                    {% elif v.new == 'problem' %}
-                                                    问题
-                                                    {% elif v.new == 'sell' %}
-                                                    卖出
-                                                    {% endif %}
-                                                {% elif v.field == 'remark' %}
-                                                    将备注修改为{{v.new}}
-                                                {% elif v.field == 'maintain' %}
-                                                    {% if v.new == 2 %}
-                                                    将维修商修改为钻石维修
-                                                    {% endif %}
-                                                {% elif v.field == 'user' %}
-                                                    {% if v.new == 1 %}
-                                                    将使用人修改为冯海艳
-                                                    {% elif v.new == 2 %}
-                                                    将使用人修改为周维
-                                                    {% endif %}
-                                                {% endif %}
-                                                <br>
+                                            {% if v.field == 'img' %}
+                                            将图片地址修改为{{v.new}}
+                                            {% elif v.field == 'state' %}
+                                            将状态修改为
+                                            {% if v.new == 'unused' %}
+                                            库存
+                                            {% elif v.new == 'useing' %}
+                                            使用中
+                                            {% elif v.new == 'fixing' %}
+                                            维修中
+                                            {% elif v.new == 'scrap' %}
+                                            报废
+                                            {% elif v.new == 'problem' %}
+                                            问题
+                                            {% elif v.new == 'sell' %}
+                                            卖出
+                                            {% endif %}
+                                            {% elif v.field == 'remark' %}
+                                            将备注修改为{{v.new}}
+                                            {% elif v.field == 'maintain' %}
+                                            {% if v.new == 2 %}
+                                            将维修商修改为钻石维修
+                                            {% endif %}
+                                            {% elif v.field == 'user' %}
+                                            {% if v.new == 1 %}
+                                            将使用人修改为冯海艳
+                                            {% elif v.new == 2 %}
+                                            将使用人修改为周维
+                                            {% endif %}
+                                            {% endif %}
+                                            <br>
                                             {% endfor %}
                                         </div>
                                     </div>

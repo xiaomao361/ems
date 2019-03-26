@@ -325,13 +325,13 @@
                 </div>
                 <div class="product-info">
                   <a href="/admin/ems/could_sell/{{sell.id}}" class="product-title">{{sell.equ}}
-                      {% if sell.equ.state == "problem" %}
-                      <span class="badge badge-warning float-right">¥{{sell.advice_price}}</span></a>
-                      {% elif sell.equ.state == "unused" %}
-                      <span class="badge badge-info float-right">¥{{sell.advice_price}}</span></a>
-                      {% elif sell.equ.state == "scrap" %}
-                      <span class="badge badge-danger float-right">¥{{sell.advice_price}}</span></a>
-                      {% endif %}
+                    {% if sell.equ.state == "problem" %}
+                    <span class="badge badge-warning float-right">¥{{sell.advice_price}}</span></a>
+                  {% elif sell.equ.state == "unused" %}
+                  <span class="badge badge-info float-right">¥{{sell.advice_price}}</span></a>
+                  {% elif sell.equ.state == "scrap" %}
+                  <span class="badge badge-danger float-right">¥{{sell.advice_price}}</span></a>
+                  {% endif %}
                   <span class="product-description">
                     {{sell.content}}
                   </span>

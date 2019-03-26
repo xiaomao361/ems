@@ -16,10 +16,8 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">应用接口列表</h3>
-
           <div class="card-tools">
             <div class="input-group input-group-sm" style="width: 100px;">
-
               <div class="input-group-append">
                 <button type="submit" class="btn btn-default"><a href="/add_app/"
                     class="fa fa-plus-circle"></a></button>
@@ -43,7 +41,8 @@
               <td>{{app.app_key}}</td>
               <td>
                 <a href="/del_app/?app_id={{ app.app_id }}">
-                  <button type="button" class="btn btn-block btn-outline-danger" onclick="return confirm('确定删除？')" >删除</button>
+                  <button type="button" class="btn btn-block btn-outline-danger"
+                    onclick="return confirm('确定删除？')">删除</button>
                 </a>
               </td>
             </tr>
@@ -57,7 +56,6 @@
   </div><!-- /.row -->
 </section>
 {% endblock %}
-
 {% block script %}
 
 <!-- DataTables -->
