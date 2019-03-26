@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'admin_timeline',
     'django.contrib.admindocs',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -215,3 +216,10 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = 'xiaomao361@163.com'
 EMAIL_HOST_PASSWORD = 'Zhouwei19891011.'
 DEFAULT_FROM_EMAIL = 'xiaomao361@163.com'
+
+CRONJOBS = [
+    ('0 0 * * *', 'ems.cron.printer_check','>>/tmp/ems_cron.log'),
+    ('0 0 * * *', 'ems.cron.backup_data','>>/tmp/ems_cron.log'),
+    ('0 1 * * *', 'ems.cron.warranty_check','>>/tmp/ems_cron.log'),
+    ('0 2 * * *', 'ems.cron.backup_check','>>/tmp/ems_cron.log')
+]

@@ -98,7 +98,6 @@ def send_chat(request):
         content = request.POST['content']
         # chat_from_id = request.GET['chat_from_id']
         # chat_to_id = request.GET['usechat_to_idr_id']
-        print(content)
         chat = models.Chat(
         content=content, chat_from_id='1', chat_to_id='2')
         chat.save()

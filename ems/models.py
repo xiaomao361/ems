@@ -100,6 +100,8 @@ class Equipment(models.Model):
     maintain = models.ForeignKey('Merchant', on_delete=models.CASCADE, default="null",
                                  blank=True, related_name="fixer", null=True, verbose_name='维修方')
     history = HistoricalRecords()
+    warranty = models.CharField(
+        max_length=128, default="365", verbose_name='保修')
     c_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -235,3 +237,22 @@ class Chat(models.Model):
         ordering = ["-c_time"]
         verbose_name = "聊天"
         verbose_name_plural = "聊天"
+
+
+class Could_sell(models.Model):
+    title = models.CharField(max_length=128, verbose_name='标题')
+    content = models.TextField(
+        max_length=256, default="", blank=True, verbose_name='内容')
+    is_read = models.BooleanField(default=False, verbose_name='是否已读')
+    advice_price = models.CharField(max_length=128, verbose_name='建议价格')
+    equ = models.ForeignKey(
+        'Equipment', on_delete=models.CASCADE, verbose_name='相关设备',  related_name='equ')
+    c_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ["-c_time"]
+        verbose_name = "建议出售设备"
+        verbose_name_plural = "建议出售设备"

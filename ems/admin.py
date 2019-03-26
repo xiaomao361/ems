@@ -10,6 +10,7 @@ admin.site.register(models.OpenApp)
 admin.site.register(models.Joke)
 # admin.site.register(models.Risk)
 admin.site.register(models.Chat)
+admin.site.register(models.Could_sell)
 
 admin.site.site_title = "EMS manager"
 admin.site.site_header = "EMS manager"
