@@ -199,7 +199,7 @@ SWAGGER_SETTINGS = {
     'OPERATIONS_SORTER': 'alpha',
     'VALIDATOR_URL': None,
 }
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
