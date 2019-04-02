@@ -63,6 +63,7 @@ urlpatterns = [
     url(r'^notices/', views.notices),
     url(r'^notice/', views.notice),
     url(r'^del_notice/', views.del_notice),
+    url(r'^del_notices/', views.del_notices),
     url(r'^read_all_notices/', views.read_all_notices),
     url(r'^risk_fix/', views.risk_fix),
     url(r'^send_chat/', views.send_chat),

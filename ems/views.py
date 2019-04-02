@@ -332,8 +332,18 @@ def notice(request):
 def del_notice(request):
     if request.method == "GET":
         id = request.GET['id']
-        notice = models.Notice.objects.get(id=id).delete()
+        models.Notice.objects.get(id=id).delete()
         return redirect('/notices/')
+
+def del_notices(request):
+    if request.method=="POST":
+        check_box_list = request.POST.getlist('check_box_list')
+        if check_box_list:
+            for id in check_box_list:
+                models.Notice.objects.get(id=id).delete()
+            return redirect('/notices/')
+        else:
+            return redirect('/notices/')
 
 
 def read_all_notices(request):

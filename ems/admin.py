@@ -16,9 +16,7 @@ admin.site.site_title = "EMS manager"
 admin.site.site_header = "EMS manager"
 admin.site.index_title = "EMS manager"
 
-# @admin.register(models.Equipment)
-
-
+@admin.register(models.Equipment)
 class EquipmentAdmin(admin.ModelAdmin):
     fieldsets = [
         ('设备', {'fields': ['name', 'category',
@@ -30,13 +28,17 @@ class EquipmentAdmin(admin.ModelAdmin):
     list_filter = ['c_time']
     search_fields = ['sn', 'name', 'state']
     date_hierarchy = 'c_time'
+    actions = ['storage']
 
+    def storage(self, request, queryset):
+        queryset.update(state='unused')
+    storage.short_description = "入库"
 
 class EquipmentHistoryAdmin(SimpleHistoryAdmin):
     list_display = ['name', 'sn', 'state', 'remark']
 
 
-admin.site.register(models.Equipment, EquipmentHistoryAdmin)
+# admin.site.register(models.Equipment, EquipmentHistoryAdmin)
 
 
 @admin.register(models.User)
